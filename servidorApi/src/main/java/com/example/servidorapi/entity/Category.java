@@ -1,28 +1,28 @@
 package com.example.servidorapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "Categories")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryID")
+    @Column(name = "CategoryID")
     private Integer idCategory;
 
-    @Column(name = "categoryName", nullable = false, length = 15)
+    @Column(name = "CategoryName", nullable = false, length = 15)
     private String categoryName;
 
-    @Column(name = "description", nullable = false, length = 100)
+    @Column(name = "Description", nullable = false, length = 100)
     private String description;
 
     //Relaciones
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Product> productos;
 
     // Get y Set

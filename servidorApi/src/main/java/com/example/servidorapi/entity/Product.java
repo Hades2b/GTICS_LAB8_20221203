@@ -1,44 +1,39 @@
 package com.example.servidorapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "products")
+@Table(name = "Products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productID")
+    @Column(name = "ProductID")
     private Integer idProduct;
 
-    @Column(name = "productName", nullable = false, length = 40)
+    @Column(name = "ProductName", nullable = false, length = 40)
     private String productName;
 
     @JoinColumn(name = "supplierID")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnoreProperties({"productos", "hibernateLazyInitializer"})
     private Supplier supplier;
 
-    @JoinColumn(name = "categoryID")
+    @JoinColumn(name = "CategoryID")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnoreProperties({"productos", "hibernateLazyInitializer"})
     private Category category;
 
 
-    @Column(name = "unitPrice", nullable = false, precision = 10, scale = 2)
-    private BigDecimal unitPrice;
+    @Column(name = "Price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal Price;
 
-    @Column(name = "unitsInStock", nullable = false)
-    private Integer unitsInStock;
+    @Column(name = "Unit", nullable = false, length = 25)
+    private String unit;
 
-    @Column(name = "unitsOnOrder", nullable = false)
-    private Integer unitsOnOrder;
-
-    @Column(name = "discontinued", nullable = false)
-    private boolean discontinued;
 
 
     // Get y Set
@@ -70,31 +65,17 @@ public class Product {
         this.category = category;
     }
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
+    public BigDecimal getPrice() {
+        return Price;
     }
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public Integer getUnitsInStock() {
-        return unitsInStock;
-    }
-    public void setUnitsInStock(Integer unitsInStock) {
-        this.unitsInStock = unitsInStock;
+    public void setPrice(BigDecimal price) {
+        Price = price;
     }
 
-    public Integer getUnitsOnOrder() {
-        return unitsOnOrder;
+    public String getUnit() {
+        return unit;
     }
-    public void setUnitsOnOrder(Integer unitsOnOrder) {
-        this.unitsOnOrder = unitsOnOrder;
-    }
-
-    public boolean isDiscontinued() {
-        return discontinued;
-    }
-    public void setDiscontinued(boolean discontinued) {
-        this.discontinued = discontinued;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

@@ -1,28 +1,28 @@
 package com.example.servidorapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "suppliers")
+@Table(name = "Suppliers")
 public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supplierID")
+    @Column(name = "SupplierID")
     private Integer idSupplier;
 
-    @Column(name = "companyName", nullable = false, length = 40)
-    private String companyName;
+    @Column(name = "SupplierName", nullable = false, length = 40)
+    private String supplierName;
 
-    @Column(name = "address", nullable = false, length = 60)
+    @Column(name = "Address", nullable = false, length = 60)
     private String address;
 
     //Relaciones
     @OneToMany(mappedBy = "supplier",fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Product> productos;
 
     // Get y Set
@@ -33,11 +33,11 @@ public class Supplier {
         this.idSupplier = idSupplier;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getSupplierName() {
+        return supplierName;
     }
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public String getAddress() {
