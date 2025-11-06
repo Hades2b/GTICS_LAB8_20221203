@@ -1,0 +1,242 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API Productos",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/product": {
+      "get": {
+        "tags": ["obtencion-controller"],
+        "summary": "Lista todos los productos",
+        "operationId": "listarProductos",
+        "responses": {
+          "200": {
+            "description": "Lista de productos obtenida correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Product" }
+                }
+              }
+            }
+          },
+        }
+      },
+      "post": {
+        "tags": ["manipulacion-controller"],
+        "summary": "Crear un nuevo producto",
+        "operationId": "crearProducto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Product" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 201 },
+                    "mensaje": { "type": "string", "example": "Producto creado con éxito" },
+                    "producto": { "$ref": "#/components/schemas/Product" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error al crear producto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "error": { "type": "string", "example": "Error en los datos del producto" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["manipulacion-controller"],
+        "summary": "Actualizar un producto existente",
+        "operationId": "actualizarProducto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Product" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producto actualizado con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 200 },
+                    "mensaje": { "type": "string", "example": "Producto actualizado con éxito" },
+                    "producto": { "$ref": "#/components/schemas/Product" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Producto no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "error": { "type": "string", "example": "Producto con ID: id no encontrado" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": ["obtencion-controller"],
+        "summary": "Obtiene un producto por ID",
+        "operationId": "obtenerProducto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 200 },
+                    "producto": { "$ref": "#/components/schemas/Product" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Producto no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "error": { "type": "string", "example": "Producto con ID: id no encontrado" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["manipulacion-controller"],
+        "summary": "Eliminar un producto por ID",
+        "operationId": "eliminarProducto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto eliminado con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 200 },
+                    "mensaje": { "type": "string", "example": "Producto eliminado con éxito" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Producto no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "error": { "type": "string", "example": "Producto con ID: id no encontrado" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "idCategory": { "type": "integer", "format": "int32" },
+          "categoryName": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
+      "Supplier": {
+        "type": "object",
+        "properties": {
+          "idSupplier": { "type": "integer", "format": "int32" },
+          "supplierName": { "type": "string" },
+          "address": { "type": "string" }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "idProduct": { "type": "integer", "format": "int32" },
+          "productName": { "type": "string" },
+          "supplier": { "$ref": "#/components/schemas/Supplier" },
+          "category": { "$ref": "#/components/schemas/Category" },
+          "price": { "type": "number", "format": "double" },
+          "unit": { "type": "string" },
+        }
+      }
+    }
+  }
+}
